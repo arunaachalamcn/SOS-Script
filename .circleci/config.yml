@@ -43,13 +43,13 @@ jobs:
       #- run: bundle exec rake db:schema:load
 
       ## Customize dependencies
-      dependencies:
-       pre:
+      #dependencies:
+      # pre:
         #- npm install coffeescript # install from a different package manager
         #- gem install 'nokogiri' --pre # use a custom version of bundler
         #- gem install bundler --pre
-        - gem uninstall bundler # use a custom version of bundler
-        - gem install bundler --pre
+      #  - gem uninstall bundler # use a custom version of bundler
+      #  - gem install bundler --pre
     
       # run tests!
       - run:
