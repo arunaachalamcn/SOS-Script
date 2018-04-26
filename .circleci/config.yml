@@ -21,17 +21,7 @@ jobs:
       #    command: |
       #      bundle install --jobs=4 --retry=3 --path vendor/bundle
 
-      ## Customize dependencies
-dependencies:
-  pre:
-    - npm install coffeescript # install from a different package manager
-    - gem uninstall bundler # use a custom version of bundler
-    - gem install bundler --pre
-
-  override:
-    - bundle install: # note ':' here
-        timeout: 180 
-        
+      
       # run tests!
       - run:
           name: SOS Script
@@ -41,11 +31,6 @@ dependencies:
             echo $CIRCLE_WORKING_DIRECTORY
             ruby sos.rb
             
-      #      bundle exec rspec --format progress \
-      #                      --format RspecJunitFormatter \
-      #                      --out /tmp/test-results/rspec.xml \
-      #                      --format progress \
-      #                      $TEST_FILES
 
       # collect reports
       - store_test_results:
