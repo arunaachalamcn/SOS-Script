@@ -8,17 +8,14 @@ jobs:
     docker:
        - image: circleci/ruby:2.5.0-node-browsers
 
-    working_directory: 
-    #~/repo
-
     steps:
       - checkout
 
-      #- run:
-      #    name: install dependencies
-      #    command: |
+      - run:
+          name: install dependencies
+          command: |
       #      bundle install --jobs=4 --retry=3 --path vendor/bundle
-
+          gem install nokogiri
       
       # run tests!
       - run:
