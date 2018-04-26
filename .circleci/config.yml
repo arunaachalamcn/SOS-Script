@@ -50,7 +50,8 @@ jobs:
         #- gem install bundler --pre
       #  - gem uninstall bundler # use a custom version of bundler
       #  - gem install bundler --pre
-    
+      - bundle update
+      - bundle exec ruby
       # run tests!
       - run:
           name: SOS Script
