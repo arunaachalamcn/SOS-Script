@@ -13,7 +13,6 @@ jobs:
 
       # Customize dependencies
       - dependencies:
-          pre:
             gem install nokogiri
       
       # run tests!
