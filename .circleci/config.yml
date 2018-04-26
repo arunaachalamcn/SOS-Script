@@ -25,7 +25,7 @@ jobs:
       #dependencies:
       # pre:
         #- npm install coffeescript # install from a different package manager
-        gem install nokogiri #--pre # use a custom version of bundler
+        gem install nokogiri --pre # use a custom version of bundler
         #- gem install bundler --pre
       #  - gem uninstall bundler # use a custom version of bundler
       #  - gem install bundler --pre
