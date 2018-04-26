@@ -44,7 +44,7 @@ jobs:
 
       ## Customize dependencies
       dependencies:
-      - pre:
+      #- pre:
         #- npm install coffeescript # install from a different package manager
         - gem install 'nokogiri' # use a custom version of bundler
         #- gem install bundler --pre
