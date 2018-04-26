@@ -46,7 +46,7 @@ jobs:
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests "/sos.rb")"
-            ruby sos.rb
+            ruby /sos.rb
             
       #      bundle exec rspec --format progress \
       #                      --format RspecJunitFormatter \
