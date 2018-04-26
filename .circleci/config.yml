@@ -12,7 +12,7 @@ jobs:
       - checkout
 
       # Customize dependencies
-      dependencies:
+      - dependencies:
           pre:
             - gem install nokogiri
       
