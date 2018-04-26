@@ -11,9 +11,10 @@ jobs:
     steps:
       - checkout
 
-    dependencies:
-      pre:
-          - gem install nokogiri
+      # Customize dependencies
+      dependencies:
+          pre:
+            - gem install nokogiri
       
       # run tests!
       - run:
