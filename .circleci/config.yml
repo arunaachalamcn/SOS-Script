@@ -12,8 +12,8 @@ jobs:
       - checkout
 
       # Customize dependencies
-      dependencies:
-            gem install nokogiri
+      - dependencies:
+          - gem install nokogiri
       
       # run tests!
       - run:
