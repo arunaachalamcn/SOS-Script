@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - checkout
-
+        git init
       # Download and cache dependencies
       #- restore_cache:
       #    keys:
