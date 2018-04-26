@@ -46,9 +46,9 @@ jobs:
           name: SOS Script
           command: |
             mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests "/sos.rb")"
+      #      TEST_FILES="$(circleci tests "/sos.rb")"
       #      echo $CIRCLE_WORKING_DIRECTORY
-            echo $HOME
+            echo HOME
             ruby SOS-Script/sos.rb
             
       #      bundle exec rspec --format progress \
