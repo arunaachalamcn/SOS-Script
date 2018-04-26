@@ -22,8 +22,8 @@ jobs:
       #      bundle install --jobs=4 --retry=3 --path vendor/bundle
 
       ## Customize dependencies
-      #dependencies:
-      # pre:
+      dependencies:
+       pre:
         #- npm install coffeescript # install from a different package manager
         - gem install nokogiri --pre # use a custom version of bundler
         #- gem install bundler --pre
