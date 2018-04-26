@@ -45,7 +45,7 @@ jobs:
           name: SOS Script
           command: |
             mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "/sos.rb")"
+            TEST_FILES="$(circleci tests "/sos.rb")"
             
       #      bundle exec rspec --format progress \
       #                      --format RspecJunitFormatter \
