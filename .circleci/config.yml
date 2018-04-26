@@ -12,7 +12,7 @@ jobs:
       - checkout
 
       # Customize dependencies
-      - gem install nokogiri
+    - gem install nokogiri
       
       # run tests!
       - run:
