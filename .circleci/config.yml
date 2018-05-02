@@ -1,31 +1,213 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
-version: 2
-jobs:
-  build:
-    docker:
-       - image: circleci/ruby:2.5.0-node-browsers
+# reusable defaults
+image: &image
+  docker:
+    - image: 139331722552.dkr.ecr.us-east-1.amazonaws.com/devops/circlebuilder:201803221512
+      aws_auth:
+        aws_access_key_id: $AWS_KEY_PROD
+        aws_secret_access_key: $AWS_SECRET_PROD
+      environment:
+        ARTHREX_SERVICE: sos
 
+remote_docker: &remote_docker
+  setup_remote_docker:
+    reusable: true
+    exclusive: true
+
+# must set interpolated vars this way for now, https://circleci.com/docs/2.0/env-vars/
+interpolated_vars: &interpolated_vars
+  run:
+    name: set interpolated ENV variables
+    command: |
+      if [[ "$CIRCLE_BRANCH" == "master" ]]
+      then
+        echo 'export ARTHREX_INSTANCE=production' >> $BASH_ENV
+      else
+        echo 'export ARTHREX_INSTANCE=$CIRCLE_BRANCH' >> $BASH_ENV
+      fi
+
+# begin actual config
+version: 2
+
+jobs:
+  static_analysis:
+    <<: *image
     steps:
       - checkout
-
-      # Customize dependencies
-      # - gem install nokogiri
-      
-      # run tests!
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
       - run:
-          name: SOS Script
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests "/sos.rb")"
-            ruby sos.rb
-            
+          name: login to ECR
+          command: $(AWS_ACCESS_KEY_ID=$AWS_KEY_PROD AWS_SECRET_ACCESS_KEY=$AWS_SECRET_PROD aws ecr get-login --no-include-email --region=us-east-1)
+      - run:
+          name: Rubocop
+          command: SSH_KEY=$(cat ~/.ssh/id_rsa_0d1f2a1ca34b041438ed258b3a1c7b5f) docker-compose --file docker-compose.test.yml run main rubocop
 
-      # collect reports
-      - store_test_results:
-          path: /tmp/test-results
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+  test:
+    <<: *image
+    steps:
+      - checkout
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
+      - run: git clone git@github.com:arthrex/bootstrap-sass-flat.git
+      - run: $(AWS_ACCESS_KEY_ID=$AWS_KEY_PROD AWS_SECRET_ACCESS_KEY=$AWS_SECRET_PROD aws ecr get-login --no-include-email --region=us-east-1)
+      - run:
+          name: run tests
+          command: >
+            SSH_KEY=$(cat ~/.ssh/id_rsa_0d1f2a1ca34b041438ed258b3a1c7b5f)
+            APP_PATH=$(pwd)
+            docker-compose
+            --file docker-compose.test.yml up
+            --exit-code-from main --build
+
+  deploy_non_master:
+    <<: *image
+    steps:
+      - checkout
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
+      - run: git clone git@github.com:arthrex/bootstrap-sass-flat.git
+      - run: convox login console.arthrex.io
+      - run: convox switch awsdev
+      - <<: *interpolated_vars
+      - run:
+          name: Initialize new app if necessary
+          command: |
+            if [[ "$CIRCLE_BRANCH" != "develop" ]]
+            then
+              ARTHREX_ENV=dev /app/pr-builder.rb
+            fi
+      - deploy:
+          command: SSH_KEY=$(cat ~/.ssh/id_rsa_0d1f2a1ca34b041438ed258b3a1c7b5f) ARTHREX_ENV=dev CIRCLE_BRANCH=$CIRCLE_BRANCH ./non-master-deploy.sh
+          no_output_timeout: 20m
+      - run:
+          name: set security group to allow access
+          command: ARTHREX_ENV=dev TASK=set-security-group /app/pr-builder.rb
+      - run:
+          name: "Set Route 53 entry"
+          command: ./set_route_53_entry.sh
+          no_output_timeout: 15m
+      - run: # TODO: display correct urls for standard branches dev, prod, etc
+          name: "Instance available at"
+          command: echo "$CIRCLE_BRANCH.surgicaloutcomesystem.com"
+
+  deploy_production_usa:
+    <<: *image
+    steps:
+      - checkout
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
+      - run: convox login console.arthrex.io
+      - <<: *interpolated_vars
+      - deploy:
+          command: |
+            convox switch awsprod
+            convox deploy --wait --file docker-compose.prod.yml --app sos-prod
+            convox switch awsdev
+          no_output_timeout: 20m
+
+  deploy_production_emea:
+    <<: *image
+    steps:
+      - checkout
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
+      - run: convox login console.arthrex.io
+      - <<: *interpolated_vars
+      - deploy:
+          command: |
+            convox switch awsemea
+            convox deploy --wait --file docker-compose.prod.yml --app sos-prod-emea
+            convox switch awsdev
+          no_output_timeout: 20m
+
+  deploy_sandbox:
+    <<: *image
+    steps:
+      - checkout
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
+      - run: convox login console.arthrex.io
+      - run: convox switch awsdev
+      - <<: *interpolated_vars
+      - deploy:
+          command: convox deploy --wait --file docker-compose.publicdev.yml --app sos-sandbox
+          no_output_timeout: 20m
+
+  deploy_preview:
+    <<: *image
+    steps:
+      - checkout
+      - <<: *remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - "0d:1f:2a:1c:a3:4b:04:14:38:ed:25:8b:3a:1c:7b:5f"
+      - run: convox login console.arthrex.io
+      - run: convox switch awsdev
+      - <<: *interpolated_vars
+      - deploy:
+          command: convox deploy --wait --file docker-compose.publicdev.yml --app sos-preview
+          no_output_timeout: 20m
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - static_analysis:
+          context: org-global
+      - test:
+          context: org-global
+      - deploy_non_master:
+          context: org-global
+          requires:
+            - test
+            - static_analysis
+          filters:
+            branches:
+              ignore: master
+
+      # the following are pretty redundant
+      # but we break them up so they can run in parallel
+      - deploy_production_usa:
+          context: org-global
+          requires:
+            - test
+            - static_analysis
+          filters:
+            branches:
+              only: master
+      - deploy_production_emea:
+          context: org-global
+          requires:
+            - test
+            - static_analysis
+          filters:
+            branches:
+              only: master
+      - deploy_sandbox:
+          context: org-global
+          requires:
+            - test
+            - static_analysis
+          filters:
+            branches:
+              only: master
+      - deploy_preview:
+          context: org-global
+          requires:
+            - test
+            - static_analysis
+          filters:
+            branches:
+              only: master
