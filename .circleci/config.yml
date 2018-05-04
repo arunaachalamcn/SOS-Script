@@ -20,8 +20,8 @@ jobs:
             mkdir /tmp/test-results
             echo #PATH
             #TEST_FILES="$(circleci tests "/sos.rb")"
-            ruby sos.rb
             bundle exec TEST_FILES
+            ruby sos.rb
             
   # collect reports
       - store_test_results:
