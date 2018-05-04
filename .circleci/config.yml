@@ -29,6 +29,7 @@ jobs:
           name: SOS Script
           command: |
             echo $CIRCLE_WORKING_DIRECTORY
+            cd ~/project
             #TEST_FILES="$(circleci tests "/sos.rb")"
             bundle exec TEST_FILES
             ruby sos.rb
