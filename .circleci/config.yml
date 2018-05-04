@@ -33,7 +33,7 @@ jobs:
             cd ~/projects
             echo $CIRCLE_WORKING_DIRECTORY
             TEST_FILES="$(circleci tests "/sos.rb")"
-            bundle exec TEST_FILES
+            #bundle exec TEST_FILES
             ruby sos.rb
             mkdir /tmp/test-results
             
