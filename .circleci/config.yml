@@ -22,6 +22,9 @@ jobs:
             echo $CIRCLE_WORKING_DIRECTORY
             gem install bundler --install-dir ~/projects
             gem install nokogiri
+            gem install selenium-webdriver
+            gem install simple-spreadsheet
+  
             #find / -name bundle
             #bundle config --local frozen true
             #bundle config --local without production:development:staging
