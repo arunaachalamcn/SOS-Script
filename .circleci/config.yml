@@ -15,12 +15,12 @@ jobs:
       - checkout
 
   ## Customize dependencies
-dependencies:
-  pre:
+#dependencies:
+#  pre:
     - gem uninstall bundler 
     - gem install bundler --pre
 
-  override:
+#  override:
     - bundle install: # note ':' here
         timeout: 180
         
