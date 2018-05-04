@@ -19,7 +19,7 @@ jobs:
           name: Install dependencies
           command: |
             echo $HOME
-            $cd project
+            cd ..
             gem install bundler
             echo $CIRCLE_WORKING_DIRECTORY
             #bundle config --local frozen true
