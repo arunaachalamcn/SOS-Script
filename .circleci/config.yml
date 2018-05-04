@@ -20,10 +20,10 @@ jobs:
           command: |
             gem install bundler
             echo $working_directory
-            bundle config --local frozen true
-            bundle config --local without production:development:staging
-            bundle config --local path vendor/bundle
-            bundle check || bundle install --jobs=4 --retry=3
+            #bundle config --local frozen true
+            #bundle config --local without production:development:staging
+            #bundle config --local path vendor/bundle
+            #bundle check || bundle install --jobs=4 --retry=3
       - run:
           name: SOS Script
           command: |
