@@ -3,7 +3,7 @@ class SOS
   require 'nokogiri'
   require 'selenium-webdriver'
   require 'simple-spreadsheet'
-  require 'C:\Ruby25-x64\CommonFunctions'
+  #require 'C:\Ruby25-x64\CommonFunctions'
   driver = Selenium::WebDriver.for :chrome
   driver.manage.timeouts.implicit_wait = 20
   driver.manage.window.maximize
