@@ -32,7 +32,7 @@ jobs:
             cd /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.1/exe
             cd ~/projects
             echo $CIRCLE_WORKING_DIRECTORY
-            #TEST_FILES="$(circleci tests "/sos.rb")"
+            TEST_FILES="$(circleci tests "/sos.rb")"
             bundle exec TEST_FILES
             ruby sos.rb
             mkdir /tmp/test-results
