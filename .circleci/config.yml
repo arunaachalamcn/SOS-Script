@@ -17,7 +17,7 @@ jobs:
         - gem uninstall bundler 
         - gem install bundler --pre
         - bundle install: # note ':' here
-        timeout: 180
+          timeout: 180
         
       - run:
         name: SOS Script
