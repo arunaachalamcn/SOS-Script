@@ -8,7 +8,8 @@ jobs:
     docker:
        - image: circleci/ruby:2.5.0-node-browsers
 
-    working_directory:~/repo
+    working_directory:
+    #~/repo
 
     steps:
       - checkout
@@ -23,7 +24,7 @@ jobs:
             #bundle config --local frozen true
             #bundle config --local without production:development:staging
             #bundle config --local path vendor/bundle
-            bundle check || bundle install --jobs=4 --retry=3
+            #bundle check || bundle install --jobs=4 --retry=3
       - run:
           name: SOS Script
           command: |
