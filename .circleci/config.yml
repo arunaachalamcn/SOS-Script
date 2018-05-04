@@ -13,15 +13,10 @@ jobs:
 
     steps:
       - checkout
-
-  ## Customize dependencies
-#dependencies:
-#  pre:
-    - gem uninstall bundler 
-    - gem install bundler --pre
-
-#  override:
-    - bundle install: # note ':' here
+    - run:
+      - gem uninstall bundler 
+      - gem install bundler --pre
+      - bundle install: # note ':' here
         timeout: 180
         
   # run tests!
