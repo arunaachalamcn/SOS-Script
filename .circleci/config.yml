@@ -19,8 +19,7 @@ jobs:
         - bundle install: # note ':' here
         timeout: 180
         
-  # run tests!
-    - run:
+      - run:
         name: SOS Script
         command: |
           mkdir /tmp/test-results
@@ -30,8 +29,8 @@ jobs:
           bundle exec TEST_FILES
             
   # collect reports
-    - store_test_results:
-        path: /tmp/test-results
-    - store_artifacts:
-        path: /tmp/test-results
-        destination: test-results
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
