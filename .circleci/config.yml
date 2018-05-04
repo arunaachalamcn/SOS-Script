@@ -29,8 +29,8 @@ jobs:
       - run:
           name: SOS Script
           command: |
-            cd\
-            cd\
+            cd..
+            cd..
             cd ~/usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.1/exe/bundle
             echo $CIRCLE_WORKING_DIRECTORY
             #TEST_FILES="$(circleci tests "/sos.rb")"
