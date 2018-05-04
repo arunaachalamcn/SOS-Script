@@ -1,7 +1,7 @@
 class SOS
 
-  require './nokogiri'
-  #require 'C:\Ruby25-x64\CommonFunctions'
+  require 'nokogiri'
+  require 'C:\Ruby25-x64\CommonFunctions'
   require 'selenium-webdriver'
   require 'simple-spreadsheet'
   driver = Selenium::WebDriver.for :chrome
