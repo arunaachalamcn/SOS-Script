@@ -7,7 +7,6 @@ class SOS
   driver = Selenium::WebDriver.for :chrome
   #driver.manage.timeouts.implicit_wait = 20
   #driver.manage.window.maximize
-  #comment
   driver.get ("https://dev.surgicaloutcomesystem.com/portal/sessions/new")
   cf = CommonFunctions.new
 
