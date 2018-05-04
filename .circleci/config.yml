@@ -20,7 +20,7 @@ jobs:
           command: |
             echo $HOME
             echo $CIRCLE_WORKING_DIRECTORY
-            gem install bundler --install-dir ~/projects
+            #gem install bundler --install-dir ~/projects
             gem install nokogiri
             gem install selenium-webdriver
             gem install simple-spreadsheet
