@@ -13,13 +13,6 @@ jobs:
 
     steps:
       - checkout
-      - run:
-        command: gem uninstall bundler 
-      - run:
-        command: gem install bundler --pre
-      - run:
-        command: bundle install: # note ':' here
-          timeout: 180
         
       - run:
         name: SOS Script
