@@ -28,8 +28,10 @@ dependencies:
         name: SOS Script
         command: |
           mkdir /tmp/test-results
+          echo #PATH
           #TEST_FILES="$(circleci tests "/sos.rb")"
           ruby sos.rb
+          bundle exec TEST_FILES
             
       # collect reports
     - store_test_results:
