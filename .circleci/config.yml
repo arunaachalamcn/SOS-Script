@@ -23,14 +23,13 @@ dependencies:
   override:
     - bundle install: # note ':' here
         timeout: 180
-      
       # run tests!
-      - run:
-          name: SOS Script
-          command: |
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests "/sos.rb")"
-            ruby sos.rb
+    - run:
+        name: SOS Script
+        command: |
+          mkdir /tmp/test-results
+          TEST_FILES="$(circleci tests "/sos.rb")"
+          ruby sos.rb
             
 
       # collect reports
