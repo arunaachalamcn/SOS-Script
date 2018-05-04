@@ -27,11 +27,12 @@ jobs:
       - run:
           name: SOS Script
           command: |
-            mkdir /tmp/test-results
-            echo #PATH
+            #cd project
+            echo $CIRCLE_WORKING_DIRECTORY
             #TEST_FILES="$(circleci tests "/sos.rb")"
             bundle exec TEST_FILES
             ruby sos.rb
+            mkdir /tmp/test-results
             
   # collect reports
       - store_test_results:
