@@ -14,9 +14,9 @@ jobs:
     steps:
       - checkout
       - run:
-        - gem uninstall bundler 
-        - gem install bundler --pre
-        - bundle install: # note ':' here
+        command: gem uninstall bundler 
+        command: gem install bundler --pre
+        command: bundle install: # note ':' here
           timeout: 180
         
       - run:
