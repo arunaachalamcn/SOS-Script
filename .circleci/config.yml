@@ -15,15 +15,15 @@ jobs:
       - checkout
 
   ## Customize dependencies
-#dependencies:
-#  pre:
-#    - gem uninstall bundler 
-#    - gem install bundler --pre
+dependencies:
+  pre:
+    - gem uninstall bundler 
+    - gem install bundler --pre
 
-#  override:
-#    - bundle install: # note ':' here
-#        timeout: 180
-      # run tests!
+  override:
+    - bundle install: # note ':' here
+        timeout: 180
+  # run tests!
     - run:
         name: SOS Script
         command: |
@@ -33,7 +33,7 @@ jobs:
           ruby sos.rb
           bundle exec TEST_FILES
             
-      # collect reports
+  # collect reports
     - store_test_results:
         path: /tmp/test-results
     - store_artifacts:
