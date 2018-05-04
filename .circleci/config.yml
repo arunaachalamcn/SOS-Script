@@ -19,9 +19,8 @@ jobs:
           name: Install dependencies
           command: |
             echo $HOME
-            cd..
             echo $CIRCLE_WORKING_DIRECTORY
-            gem install bundler #--install-dir ~/..
+            gem install bundler #--install-dir ~/projects
             #bundle config --local frozen true
             #bundle config --local without production:development:staging
             #bundle config --local path vendor/bundle
@@ -29,8 +28,8 @@ jobs:
       - run:
           name: SOS Script
           command: |
-            echo $CIRCLE_WORKING_DIRECTORY
             cd ~/project
+            echo $CIRCLE_WORKING_DIRECTORY
             #TEST_FILES="$(circleci tests "/sos.rb")"
             bundle exec TEST_FILES
             ruby sos.rb
