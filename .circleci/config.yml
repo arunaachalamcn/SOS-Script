@@ -15,14 +15,14 @@ jobs:
       - checkout
 
   ## Customize dependencies
-dependencies:
-  pre:
-    - gem uninstall bundler 
-    - gem install bundler --pre
+#dependencies:
+#  pre:
+#    - gem uninstall bundler 
+#    - gem install bundler --pre
 
-  override:
-    - bundle install: # note ':' here
-        timeout: 180
+#  override:
+#    - bundle install: # note ':' here
+#        timeout: 180
       # run tests!
     - run:
         name: SOS Script
