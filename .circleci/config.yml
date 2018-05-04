@@ -9,7 +9,7 @@ jobs:
        - image: circleci/ruby:2.5.0-node-browsers
 
     working_directory: 
-    #~/repo
+    ~/repo
 
     steps:
       - checkout
