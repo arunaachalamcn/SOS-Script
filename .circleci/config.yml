@@ -20,7 +20,7 @@ jobs:
           command: |
             echo $HOME
             echo $CIRCLE_WORKING_DIRECTORY
-            gem install bundler --install-dir /project
+            gem install bundler --install-dir ~/project
             #bundle config --local frozen true
             #bundle config --local without production:development:staging
             #bundle config --local path vendor/bundle
