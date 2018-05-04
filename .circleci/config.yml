@@ -21,7 +21,7 @@ jobs:
             echo $HOME
             echo $CIRCLE_WORKING_DIRECTORY
             gem install bundler #--install-dir ~/projects
-            find / -name bundle
+            #find / -name bundle
             #bundle config --local frozen true
             #bundle config --local without production:development:staging
             #bundle config --local path vendor/bundle
@@ -29,7 +29,7 @@ jobs:
       - run:
           name: SOS Script
           command: |
-            cd /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.1/exe/
+            cd /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.1/exe
             echo $CIRCLE_WORKING_DIRECTORY
             #TEST_FILES="$(circleci tests "/sos.rb")"
             bundle exec TEST_FILES
