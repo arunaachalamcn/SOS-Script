@@ -28,7 +28,7 @@ dependencies:
         name: SOS Script
         command: |
           mkdir /tmp/test-results
-          TEST_FILES="$(circleci tests "/sos.rb")"
+          #TEST_FILES="$(circleci tests "/sos.rb")"
           ruby sos.rb
             
       # collect reports
