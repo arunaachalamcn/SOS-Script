@@ -24,13 +24,13 @@ jobs:
             #bundle config --local frozen true
             #bundle config --local without production:development:staging
             #bundle config --local path vendor/bundle
-            #bundle check || bundle install --jobs=4 --retry=3
+            bundle check || bundle install --jobs=4 --retry=3
       - run:
           name: SOS Script
           command: |
             echo $CIRCLE_WORKING_DIRECTORY
             #TEST_FILES="$(circleci tests "/sos.rb")"
-            bundler exec TEST_FILES
+            bundle exec TEST_FILES
             ruby sos.rb
             mkdir /tmp/test-results
             
