@@ -18,12 +18,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            echo $HOME
-            echo $CIRCLE_WORKING_DIRECTORY
+            #echo $HOME
+            #echo $CIRCLE_WORKING_DIRECTORY
             #gem install bundler --install-dir ~/projects
-            gem install nokogiri
+            gem install nokogiri -v 1.8.2
             gem install selenium-webdriver -v 3.9.0
-            gem install simple-spreadsheet
+            gem install simple-spreadsheet -v 0.5.0
   
             #find / -name bundle
             #bundle config --local frozen true
@@ -35,7 +35,7 @@ jobs:
           command: |
             #cd /usr/local/lib/ruby/gems/2.5.0/gems/bundler-1.16.1/exe
             #cd ~/projects
-            echo $CIRCLE_WORKING_DIRECTORY
+            #echo $CIRCLE_WORKING_DIRECTORY
             TEST_FILES="$(circleci tests "/sos.rb")"
             #bundle exec TEST_FILES
             ruby sos.rb
