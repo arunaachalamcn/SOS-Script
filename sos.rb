@@ -5,8 +5,8 @@ class SOS
   require 'simple-spreadsheet'
   #require 'C:\Ruby25-x64\CommonFunctions'
   driver = Selenium::WebDriver.for :chrome
-  #driver.manage.timeouts.implicit_wait = 20
-  #driver.manage.window.maximize
+  driver.manage.timeouts.implicit_wait = 20
+  driver.manage.window.maximize
   driver.get ("https://dev.surgicaloutcomesystem.com/portal/sessions/new")
   cf = CommonFunctions.new
 
