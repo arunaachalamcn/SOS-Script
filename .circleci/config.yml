@@ -21,6 +21,7 @@ jobs:
             #echo $HOME
             #echo $CIRCLE_WORKING_DIRECTORY
             #gem install bundler --install-dir ~/projects
+            #gem
             gem install nokogiri -v 1.8.2
             gem install selenium-webdriver -v 3.9.0
             gem install simple-spreadsheet -v 0.5.0
